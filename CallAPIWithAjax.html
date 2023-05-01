@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Call API With Ajax</title>
+<style>
+.cathegory-box{
+	width:250px;
+	height:200px;
+	margin:15px;
+	float:left;
+	box-shadow:4px 4px 4px #444;
+	display:block;
+	
+	}
+	div{
+		display:block;
+		}
+</style>
+</head>
+
+<body>
+<h1>Call API With Ajax</h1>
+<button onClick="getCategory()">Show Category</button>
+<hr>
+<div id="container">
+
+</div>
+
+<script>
+function getCategory(){
+	//step1:
+	var request = new XMLHttpRequest();
+	//step2:
+	request.open("GET","https://apitester.ir/api/Categories");
+	//step3:
+	request.onreadystatechange=function(){
+		if (this.readyState==4 && this.status==200){
+			generateCategoryBox(JSON.parse(this.responseText));
+			
+			
+			
+			}
+		};
+		//step4:
+		request.send();
+	}
+	function generateCategoryBox(data){
+		for(let i=0; i<data.length; i++){
+			createBox(data[i]);
+			}
+		
+		
+		
+		}
+	function createBox(category){
+		let box =document.createElement("div");
+		box.className="cathegory-box";
+		
+		let title=document.createElement("h3");
+		title.innerText=category.categoryName;
+		
+		let description=document.createElement("p");
+		description.innerText=category.description;
+		
+		box.appendChild(title);
+		box.appendChild(description);
+		document.querySelector("#container").appendChild(box);
+		
+		}
+
+
+</script>
+</body>
+</html>
